@@ -1,7 +1,7 @@
 <template>
     <article :id="post.id" :class="className" @click="toggleSize">
         <figure>
-            <button v-if="post.visible" class="delete-button" @click="deletePost">DELETE</button>
+            <button v-if="post.visible" class="delete-button" @click="deletePost(post.id)">DELETE</button>
             <img :src='post.url' :alt='post.description' :key="post.id" />
             <figcaption :src="post.url">{{ post.description }}</figcaption>
         </figure>
@@ -14,6 +14,7 @@
     props: {
       post: Object,
       className: String,
+      index: Number,
       big: Boolean,
     },
     data() {
@@ -21,7 +22,7 @@
         bigger: false,
         biggerDescription: '',
         biggerUrl: '',
-        biggerId: '',
+        biggerId: null,
         articleClass: 'post-block',
       }
     },
@@ -36,9 +37,8 @@
         if (event.target.tagName === 'IMG' || event.target.tagName === 'FIGCAPTION') {
           this.biggerDescription= event.target.alt || event.target.innerText;
           this.biggerUrl = event.target.src || event.target.previousElementSibling.src;
-          this.biggerId = event.currentTarget.id;
         }
-
+        this.biggerId = event.currentTarget.id;
         // this.biggerDescription= event.target.alt || event.target.innerText;
         // this.biggerUrl = event.target.src || event.target.previousElementSibling.src;
         // this.biggerId = event.currentTarget.id;
@@ -60,10 +60,9 @@
 
         this.$emit('postInform', bigPost);
         // this.articleClass = this.bigger ? 'post-block-big' : 'post-block';
-         console.log(this.articleClass)
+
       },
-      deletePost(event) {
-        let id = event.currentTarget.id;
+      deletePost(id) {
         this.$emit('postDelete', id);
       }
     }

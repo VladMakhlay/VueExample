@@ -6,10 +6,11 @@
                 <br />
                 {{add}}
             </button>
-            <div class="posts-list" v-for="post in posts">
+            <div class="posts-list" v-for="(post, index) in posts">
                 <Post
                     :post="post"
                     :key="post.id"
+                    :index="index"
                     @postInform="onPostInfo"
                     :className="className"
                 />
@@ -36,10 +37,25 @@
 
   // let posts = [
   //   {
-  //     id: 1,
+  //     id: 1 +'',
   //     url: 'https://images.unsplash.com/photo-1541962801812-86966edae01f?ixlib=rb-0.3.5&s=59ecbf1e8fa351a745f3730206e19506&auto=format&fit=crop&w=500&q=60',
   //     description: 'Night sky 1'
-  //   }
+  //   },
+  //   {
+  //     id: 2 + '',
+  //     url: 'https://images.unsplash.com/photo-1541962801812-86966edae01f?ixlib=rb-0.3.5&s=59ecbf1e8fa351a745f3730206e19506&auto=format&fit=crop&w=500&q=60',
+  //     description: 'Night sky 2'
+  //   },
+  //   {
+  //     id: 3 + '',
+  //     url: 'https://images.unsplash.com/photo-1541962801812-86966edae01f?ixlib=rb-0.3.5&s=59ecbf1e8fa351a745f3730206e19506&auto=format&fit=crop&w=500&q=60',
+  //     description: 'Night sky 3'
+  //   },
+  //   {
+  //     id: 4 + '',
+  //     url: 'https://images.unsplash.com/photo-1541962801812-86966edae01f?ixlib=rb-0.3.5&s=59ecbf1e8fa351a745f3730206e19506&auto=format&fit=crop&w=500&q=60',
+  //     description: 'Night sky 4'
+  //   },
   // ];
 
   export default {
@@ -60,9 +76,10 @@
     methods: {
       addNewPost() {
         return this.showCreatePost = !this.showCreatePost;
+
       },
       onAddPost(obj) {
-        let id = this.posts.length + 1;
+        let id = this.posts.length + obj.description;
 
         if (obj) {
           this.$set(obj, 'id', id);
@@ -76,7 +93,8 @@
         this.className = obj.visible ? 'post-block-big' : 'post-block';
       },
       onPostDelete(id) {
-        this.posts.splice(id , 1);
+        let index = this.posts.findIndex(post => post.id === id);
+        this.posts.splice(index, 1);
       }
     },
   }
