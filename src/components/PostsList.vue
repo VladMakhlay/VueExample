@@ -1,17 +1,31 @@
 <template>
     <div class="list">
-        <div v-if="!showCreatePost" class="block-list">
+        <div v-if="!showCreatePost && !bigger" class="block-list">
             <button class="add-button" @click="addNewPost">
                <span class="big-font">&#43</span>
                 <br />
                 {{add}}
             </button>
             <div class="posts-list" v-for="post in posts">
-                <Post :url='post.url' :description='post.description' />
+                <Post
+                    :post="post"
+                    :key="post.id"
+                    @postInform="onPostInfo"
+                    :className="className"
+                />
             </div>
         </div>
-        <div class="create-post" v-else-if="showCreatePost">
+        <div class="create-post" v-else-if="showCreatePost && !bigger">
             <CreatePost v-on:childToParent="onAddPost" :toggleAdding="addNewPost" />
+        </div>
+        <div v-else-if="bigger">
+            <Post
+                    :post="bigPost"
+                    :key="bigPost.id"
+                    @postInform="onPostInfo"
+                    :className="className"
+                    @postDelete="onPostDelete"
+            />
         </div>
     </div>
 </template>
@@ -20,12 +34,13 @@
   import Post from './Post';
   import CreatePost from './CreatePost'
 
-  // let posts = [
-  //   {
-  //     url: 'https://images.unsplash.com/photo-1541962801812-86966edae01f?ixlib=rb-0.3.5&s=59ecbf1e8fa351a745f3730206e19506&auto=format&fit=crop&w=500&q=60',
-  //     description: 'Night sky 1'
-  //   }
-  // ];
+  let posts = [
+    {
+      id: 1,
+      url: 'https://images.unsplash.com/photo-1541962801812-86966edae01f?ixlib=rb-0.3.5&s=59ecbf1e8fa351a745f3730206e19506&auto=format&fit=crop&w=500&q=60',
+      description: 'Night sky 1'
+    }
+  ];
 
   export default {
     name: 'PostsList',
@@ -35,8 +50,11 @@
       return {
         msg: "We are in the posts list",
         add: "new post",
-        posts: [],
+        posts: posts,
         showCreatePost: false,
+        bigger: false,
+        bigPost: {},
+        className: 'post-block',
       }
     },
     methods: {
@@ -50,6 +68,15 @@
           this.$set(obj, 'id', id);
           this.posts.push(obj);
         }
+      },
+      onPostInfo(obj) {
+        this.bigger = obj.visible;
+        this.bigPost = obj;
+
+        this.className = obj.visible ? 'post-block-big' : 'post-block';
+      },
+      onPostDelete(id) {
+        this.posts.splice(id , 1);
       }
     },
   }
@@ -64,6 +91,10 @@
         background-color: white;
 
     }
+    .one-big-post {
+
+    }
+
     .block-list {
         display: flex;
         flex-wrap: wrap;
