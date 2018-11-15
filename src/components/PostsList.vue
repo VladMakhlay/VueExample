@@ -34,13 +34,13 @@
   import Post from './Post';
   import CreatePost from './CreatePost'
 
-  let posts = [
-    {
-      id: 1,
-      url: 'https://images.unsplash.com/photo-1541962801812-86966edae01f?ixlib=rb-0.3.5&s=59ecbf1e8fa351a745f3730206e19506&auto=format&fit=crop&w=500&q=60',
-      description: 'Night sky 1'
-    }
-  ];
+  // let posts = [
+  //   {
+  //     id: 1,
+  //     url: 'https://images.unsplash.com/photo-1541962801812-86966edae01f?ixlib=rb-0.3.5&s=59ecbf1e8fa351a745f3730206e19506&auto=format&fit=crop&w=500&q=60',
+  //     description: 'Night sky 1'
+  //   }
+  // ];
 
   export default {
     name: 'PostsList',
@@ -50,7 +50,7 @@
       return {
         msg: "We are in the posts list",
         add: "new post",
-        posts: posts,
+        posts: [],
         showCreatePost: false,
         bigger: false,
         bigPost: {},

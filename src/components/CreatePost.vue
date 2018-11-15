@@ -49,7 +49,6 @@
     .createPostFigure {
         width: 100%;
         margin: 0;
-        border: 1px solid lightgray;
         background-color: white;
     }
     .img {
@@ -67,14 +66,18 @@
     label[for="url-input"], label[for="desc-input"] {
         visibility: hidden;
     }
-    input[type=text] {
+    input {
         width: 100%;
         height: 40px;
-        border: 1px solid #eeeeee;
+        border: 1px solid #d4d9dd;
         border-radius: 4px;
         padding: 0 5px 0 10px;
         margin: 8px 0;
         box-sizing: border-box;
+        font-size: 17px;
+    }
+    input:focus {
+        outline-color: dodgerblue;
     }
     .post-button {
         padding: 5px 12px;

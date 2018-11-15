@@ -43,7 +43,7 @@
         // this.biggerUrl = event.target.src || event.target.previousElementSibling.src;
         // this.biggerId = event.currentTarget.id;
 
-        this.articleClass = this.bigger ? 'post-block-big' : 'post-block'
+
        // if(this.bigger) {
        //   event.currentTarget.classList.remove('post-block');
        //   event.currentTarget.classList.add('post-block-big');
@@ -59,7 +59,8 @@
         bigPost.visible = this.bigger;
 
         this.$emit('postInform', bigPost);
-         console.log(this.bigger)
+        // this.articleClass = this.bigger ? 'post-block-big' : 'post-block';
+         console.log(this.articleClass)
       },
       deletePost(event) {
         let id = event.currentTarget.id;
